@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мои воспоминания ✦ Photo Album</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #f5f0e8;
+      --warm-white: #faf7f2;
+      --brown-dark: #3e2c1c;
+      --brown-mid: #6b4c3b;
+      --brown-light: #a0785a;
+      --gold: #c9a96e;
+      --gold-light: #e8d5a8;
+      --rose: #d4a0a0;
+      --rose-light: #f0d5d5;
+      --sage: #a8b89a;
+      --blue-soft: #8fa8c4;
+      --lavender: #b8a9d4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--cream);
+      color: var(--brown-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ===== TEXTURE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: 
+        radial-gradient(ellipse at 20% 50%, rgba(201,169,110,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(212,160,160,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(168,184,154,0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brown-light); }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, var(--warm-white) 0%, var(--cream) 40%, #e8ddd0 100%);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: 
+        radial-gradient(circle at 30% 40%, rgba(201,169,110,0.12) 0%, transparent 40%),
+        radial-gradient(circle at 70% 60%, rgba(184,169,212,0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(212,160,160,0.08) 0%, transparent 40%);
+      animation: heroFloat 20s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(2%, -1%) rotate(1deg); }
+      66% { transform: translate(-1%, 2%) rotate(-1deg); }
+    }
+
+    /* Floating decorative elements */
+    .hero-decor {
+      position: absolute;
+      opacity: 0.15;
+      animation: floatDecor 15s ease-in-out infinite;
+      font-size: 2rem;
+    }
+    .hero-decor:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+    .hero-decor:nth-child(2) { top: 25%; right: 15%; animation-delay: -3s; font-size: 1.5rem; }
+    .hero-decor:nth-child(3) { bottom: 20%; left: 20%; animation-delay: -6s; font-size: 2.5rem; }
+    .hero-decor:nth-child(4) { bottom: 30%; right: 10%; animation-delay: -9s; }
+    .hero-decor:nth-child(5) { top: 50%; left: 5%; animation-delay: -12s; font-size: 1.8rem; }
+    .hero-decor:nth-child(6) { top: 10%; right: 25%; animation-delay: -4s; font-size: 1.2rem; }
+
+    @keyframes floatDecor {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-15px) rotate(5deg); }
+      50% { transform: translateY(-8px) rotate(-3deg); }
+      75% { transform: translateY(-20px) rotate(2deg); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+    }
+
+    .hero-subtitle-top {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: 1.15;
+      color: var(--brown-dark);
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.6s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--brown-mid);
+    }
+
+    .hero-line {
+      width: 80px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.5rem auto;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.9s forwards;
+    }
+
+    .hero-quote {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--brown-mid);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.2s forwards;
+    }
+
+    .hero-scroll {
+      opacity: 0;
+      animation: fadeUp 1s ease 1.5s forwards;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--brown-light);
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .hero-scroll:hover { color: var(--gold); }
+
+    .hero-scroll .arrow {
+      width: 20px;
+      height: 20px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      animation: bounceDown 2s ease-in-out infinite;
+    }
+
+    @keyframes bounceDown {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(5px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== YEAR SECTION HEADERS ===== */
+    .year-header {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .year-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--brown-dark);
+      position: relative;
+      display: inline-block;
+    }
+
+    .year-header h2::before,
+    .year-header h2::after {
+      content: '✦';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+    .year-header h2::before { left: -30px; }
+    .year-header h2::after { right: -30px; }
+
+    .year-header .year-line {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1rem auto 0;
+    }
+
+    /* ===== TIMELINE ===== */
+    .timeline {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      z-index: 1;
+    }
+
+    /* Central line */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent);
+      transform: translateX(-50%);
+    }
+
+    /* ===== TIMELINE ENTRY ===== */
+    .entry {
+      position: relative;
+      width: 50%;
+      padding: 1rem 3rem 3rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .entry.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .entry:nth-child(odd) {
+      left: 0;
+      padding-right: 3rem;
+      text-align: right;
+    }
+
+    .entry:nth-child(even) {
+      left: 50%;
+      padding-left: 3rem;
+      text-align: left;
+    }
+
+    /* Timeline dot */
+    .entry::before {
+      content: '';
+      position: absolute;
+      top: 1.5rem;
+      width: 12px;
+      height: 12px;
+      background: var(--cream);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      z-index: 2;
+      transition: all 0.4s;
+    }
+
+    .entry:nth-child(odd)::before {
+      right: -6px;
+    }
+    .entry:nth-child(even)::before {
+      left: -6px;
+    }
+
+    .entry:hover::before {
+      background: var(--gold);
+      box-shadow: 0 0 12px rgba(201,169,110,0.5);
+      transform: scale(1.3);
+    }
+
+    /* Date label */
+    .entry-date {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: inline-block;
+      position: relative;
+    }
+
+    /* ===== POLAROID CARD ===== */
+    .polaroid {
+      position: relative;
+      display: inline-block;
+      background: white;
+      padding: 12px 12px 50px 12px;
+      box-shadow: 
+        0 2px 15px rgba(62,44,28,0.1),
+        0 8px 30px rgba(62,44,28,0.08),
+        inset 0 0 60px rgba(201,169,110,0.05);
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+      max-width: 100%;
+    }
+
+    .entry:nth-child(odd) .polaroid {
+      transform: rotate(-2deg);
+    }
+    .entry:nth-child(even) .polaroid {
+      transform: rotate(1.5deg);
+    }
+
+    .entry:hover .polaroid {
+      transform: rotate(0deg) scale(1.03);
+      box-shadow: 
+        0 4px 25px rgba(62,44,28,0.15),
+        0 12px 40px rgba(62,44,28,0.12),
+        inset 0 0 60px rgba(201,169,110,0.05);
+    }
+
+    /* Photo area */
+    .polaroid-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #e8ddd0, #d4c5b0);
+    }
+
+    .polaroid-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      filter: sepia(15%) saturate(90%);
+    }
+
+    .entry:hover .polaroid-img img {
+      transform: scale(1.05);
+      filter: sepia(5%) saturate(100%);
+    }
+
+    /* Washi tape decoration */
+    .polaroid::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      width: 60px;
+      height: 18px;
+      z-index: 3;
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+
+    .entry:nth-child(odd) .polaroid::before {
+      right: 20px;
+      transform: rotate(5deg);
+      background: linear-gradient(135deg, rgba(212,160,160,0.7), rgba(212,160,160,0.4));
+    }
+    .entry:nth-child(even) .polaroid::before {
+      left: 20px;
+      transform: rotate(-3deg);
+      background: linear-gradient(135deg, rgba(143,168,196,0.7), rgba(143,168,196,0.4));
+    }
+
+    .entry:hover .polaroid::before { opacity: 0.85; }
+
+    /* Quote below polaroid */
+    .entry-quote {
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem;
+      color: var(--brown-mid);
+      margin-top: 1.2rem;
+      line-height: 1.5;
+      font-style: italic;
+      max-width: 320px;
+    }
+
+    .entry:nth-child(odd) .entry-quote {
+      margin-left: auto;
+    }
+
+    .entry-description {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--brown-light);
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .entry:nth-child(odd) .entry-description {
+      margin-left: auto;
+    }
+
+    /* ===== PLACEHOLDER IMAGES ===== */
+    .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+    }
+
+    /* Color themes for placeholders */
+    .ph-spb { background: linear-gradient(135deg, #7a8fa6, #a6b5c4, #8fa8c4); }
+    .ph-city { background: linear-gradient(135deg, #8a8a9a, #b0b0c0, #9a9aaa); }
+    .ph-sochi { background: linear-gradient(135deg, #6a9ab5, #8ec4d4, #5a8aa5); }
+    .ph-vdnkh { background: linear-gradient(135deg, #a8b89a, #c4d4b8, #98a88a); }
+    .ph-merch { background: linear-gradient(135deg, #c49a8a, #d4b0a0, #b48a7a); }
+    .ph-genshin { background: linear-gradient(135deg, #8a9ac4, #a4b4d4, #7a8ab4); }
+    .ph-hockey { background: linear-gradient(135deg, #5a7a9a, #7a9aba, #4a6a8a); }
+    .ph-figure { background: linear-gradient(135deg, #c4a89a, #d4b8a8, #b4988a); }
+    .ph-parrot { background: linear-gradient(135deg, #a8c48a, #b8d49a, #98b47a); }
+    .ph-dandelion { background: linear-gradient(135deg, #c4c48a, #d4d49a, #b4b47a); }
+    .ph-museum { background: linear-gradient(135deg, #b8a898, #c8b8a8, #a89888); }
+    .ph-picnic { background: linear-gradient(135deg, #a8c49a, #b8d4aa, #98b48a); }
+    .ph-discord { background: linear-gradient(135deg, #7a8ac4, #9aa4d4, #6a7ab4); }
+    .ph-eurostar { background: linear-gradient(135deg, #6a8aaa, #8aaaca, #5a7a9a); }
+    .ph-work { background: linear-gradient(135deg, #a89888, #b8a898, #988878); }
+    .ph-neuvillette { background: linear-gradient(135deg, #8a9ac4, #9aaad4, #7a8ab4); }
+    .ph-hospital { background: linear-gradient(135deg, #b0b0b8, #c0c0c8, #a0a0a8); }
+    .ph-bonya { background: linear-gradient(135deg, #c4a878, #d4b888, #b49868); }
+    .ph-disco { background: linear-gradient(135deg, #c48a9a, #d49aaa, #b47a8a); }
+    .ph-book { background: linear-gradient(135deg, #a88868, #b89878, #987858); }
+    .ph-ny-sochi { background: linear-gradient(135deg, #6a9aba, #8abada, #5a8aaa); }
+    .ph-valentine { background: linear-gradient(135deg, #d49a9a, #e4aaaa, #c48a8a); }
+    .ph-elista { background: linear-gradient(135deg, #c4b088, #d4c098, #b4a078); }
+    .ph-graduation { background: linear-gradient(135deg, #c4a89a, #d4b8aa, #b4988a); }
+    .ph-birthday { background: linear-gradient(135deg, #d4a89a, #e4b8aa, #c4988a); }
+    .ph-sleepover { background: linear-gradient(135deg, #b8a8c4, #c8b8d4, #a898b4); }
+    .ph-college { background: linear-gradient(135deg, #a0b8c4, #b0c8d4, #90a8b4); }
+    .ph-dodo { background: linear-gradient(135deg, #d4a868, #e4b878, #c49858); }
+    .ph-tanks { background: linear-gradient(135deg, #8a8a78, #9a9a88, #7a7a68); }
+    .ph-cny { background: linear-gradient(135deg, #c46868, #d47878, #b45858); }
+    .ph-kyryusha { background: linear-gradient(135deg, #a8c478, #b8d488, #98b468); }
+    .ph-rink { background: linear-gradient(135deg, #9ab8c8, #aac8d8, #8aa8b8); }
+    .ph-victory { background: linear-gradient(135deg, #8a7a6a, #9a8a7a, #7a6a5a); }
+    .ph-hangout { background: linear-gradient(135deg, #b8a898, #c8b8a8, #a89888); }
+    .ph-mall { background: linear-gradient(135deg, #a898a8, #b8a8b8, #988898); }
+    .ph-vityazevo { background: linear-gradient(135deg, #6a9aaa, #8abaca, #5a8a9a); }
+    .ph-anniversary { background: linear-gradient(135deg, #d4a8a8, #e4b8b8, #c49898); }
+    .ph-nightmare { background: linear-gradient(135deg, #7a7a8a, #8a8a9a, #6a6a7a); }
+    .ph-blood { background: linear-gradient(135deg, #b88888, #c89898, #a87878); }
+    .ph-oncology { background: linear-gradient(135deg, #9898a8, #a8a8b8, #888898); }
+    .ph-dream { background: linear-gradient(135deg, #a898b8, #b8a8c8, #9888a8); }
+    .ph-endoscopy { background: linear-gradient(135deg, #8a9a9a, #9aaaaa, #7a8a8a); }
+    .ph-gift { background: linear-gradient(135deg, #d4a89a, #e4b8aa, #c4988a); }
+    .ph-hockey-sochi { background: linear-gradient(135deg, #5a8aba, #7aaada, #4a7aaa); }
+    .ph-wedding { background: linear-gradient(135deg, #d4c8b8, #e4d8c8, #c4b8a8); }
+    .ph-love-gift { background: linear-gradient(135deg, #c48a8a, #d49a9a, #b47a7a); }
+    .ph-jersey { background: linear-gradient(135deg, #5a6a8a, #7a8aaa, #4a5a7a); }
+    .ph-blue-hair { background: linear-gradient(135deg, #6a8ac4, #8aaad4, #5a7ab4); }
+    .ph-shashlik { background: linear-gradient(135deg, #b89868, #c8a878, #a88858); }
+    .ph-sakura { background: linear-gradient(135deg, #d4a8b8, #e4b8c8, #c498a8); }
+    .ph-spb-family { background: linear-gradient(135deg, #8a9aa4, #a4b4be, #7a8a94); }
+    .ph-dream-come { background: linear-gradient(135deg, #c4a878, #d4b888, #e4c898); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-line {
+      width: 80px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 2rem;
+    }
+
+    .footer-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      color: var(--brown-mid);
+      margin-bottom: 1rem;
+    }
+
+    .footer-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      color: var(--brown-light);
+      letter-spacing: 2px;
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30,20,10,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .lightbox.active {
+      display: flex;
+      opacity: 1;
+    }
+    .lightbox-content {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      transform: scale(0.9);
+      transition: transform 0.4s;
+    }
+    .lightbox.active .lightbox-content {
+      transform: scale(1);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.8);
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      text-align: center;
+      max-width: 600px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .timeline::before {
+        left: 20px;
+      }
+
+      .entry {
+        width: 100%;
+        left: 0 !important;
+        padding-left: 50px !important;
+        padding-right: 1rem !important;
+        text-align: left !important;
+      }
+
+      .entry::before {
+        left: 14px !important;
+        right: auto !important;
+      }
+
+      .entry-quote,
+      .entry-description {
+        margin-left: 0 !important;
+      }
+
+      .entry:nth-child(odd) .polaroid,
+      .entry:nth-child(even) .polaroid {
+        transform: rotate(1deg);
+      }
+
+      .entry:nth-child(odd) .polaroid::before {
+        left: 20px;
+        right: auto;
+        transform: rotate(-3deg);
+      }
+
+      .year-header h2::before { left: -25px; }
+      .year-header h2::after { right: -25px; }
+    }
+
+    /* ===== PARTICLES ===== */
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      animation: particleFade 8s ease-in-out infinite;
+    }
+
+    @keyframes particleFade {
+      0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+      50% { opacity: 0.12; transform: translateY(-40px) scale(1); }
+    }
+
+    /* ===== NAV DOTS ===== */
+    .nav-dots {
+      position: fixed;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      border: 1px solid var(--gold);
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-dot.active {
+      background: var(--gold);
+      transform: scale(1.4);
+    }
+
+    .nav-dot:hover {
+      background: var(--gold);
+    }
+
+    .nav-dot .dot-label {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      color: var(--brown-mid);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      background: var(--cream);
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    .nav-dot:hover .dot-label { opacity: 1; }
+
+    @media (max-width: 768px) {
+      .nav-dots { display: none; }
+    }
+
+    /* ===== PHOTO GRID FOR MOBILE ALTERNATIVE ===== */
+    .photo-grid-note {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FLOATING PARTICLES -->
+  <div id="particles"></div>
+
+  <!-- NAV DOTS -->
+  <nav class="nav-dots" id="navDots"></nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-decor">📷</div>
+    <div class="hero-decor">✦</div>
+    <div class="hero-decor">🌸</div>
+    <div class="hero-decor">❋</div>
+    <div class="hero-decor">🕊</div>
+    <div class="hero-decor">✿</div>
+
+    <div class="hero-content">
+      <p class="hero-subtitle-top">photo album</p>
+      <h1 class="hero-title">Мои <em>воспоминания</em></h1>
+      <div class="hero-line"></div>
+      <p class="hero-quote">«Каждое фото — маленькая вечность, остановленная мгновением»</p>
+      <a href="#start" class="hero-scroll">
+        <span>листать</span>
+        <div class="arrow"></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE START ===== -->
+  <div id="start"></div>
+
+  <!-- === 2019 === -->
+  <div class="year-header" data-year="2019">
+    <h2>2019</h2>
+    <div class="year-line"></div>
+  </div>
+
+  <div class="timeline" id="timeline-2019">
+    <div class="entry" data-img="ph-spb" data-emoji="🏛️" data-quote="Город, в который я влюбилась с первого взгляда..." data-date="26 июня 2019">
+      <span class="entry-date">26 июня 2019</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/IMG_20190626_133017.jpg">🏛️</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Город, в который я влюбилась с первого взгляда...»</p>
+      <p class="entry-description">Моя самая первая поездка в Санкт-Петербург</p>
+    </div>
+  </div>
+
+  <!-- === 2022 === -->
+  <div class="year-header" data-year="2022">
+    <h2>2022</h2>
+    <div class="year-line"></div>
+  </div>
+
+  <div class="timeline" id="timeline-2022">
+    <div class="entry" data-img="ph-city" data-emoji="🌃" data-quote="Мегаполис, который показался мне декорацией из будущего" data-date="29 мая 2022">
+      <span class="entry-date">29 мая 2022</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/IMG_20220529_195133.jpg">🌃</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Мегаполис, который показался мне декорацией из будущего»</p>
+      <p class="entry-description">Первый раз посетила Москва-Сити с веселейшей компанией</p>
+    </div>
+
+    <div class="entry" data-img="ph-sochi" data-emoji="🌊" data-quote="Море, которое обещало вернуться снова и снова" data-date="28 июля 2022">
+      <span class="entry-date">28 июля 2022</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/IMG_20220728_124318.jpg">🌊</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Море, которое обещало вернуться снова и снова»</p>
+      <p class="entry-description">Впервые увидела Сочи</p>
+    </div>
+
+    <div class="entry" data-img="ph-vdnkh" data-emoji="🏛️" data-quote="Шаги по выставке, где каждый павильон — целая история" data-date="18 ноября 2022">
+      <span class="entry-date">18 ноября 2022</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/DSC09737.jpg">🏛️</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Шаги по выставке, где каждый павильон — целая история»</p>
+      <p class="entry-description">Посещение ВДНХ с группой активистов из школы</p>
+    </div>
+  </div>
+
+  <!-- === 2023 === -->
+  <div class="year-header" data-year="2023">
+    <h2>2023</h2>
+    <div class="year-line"></div>
+  </div>
+
+  <div class="timeline" id="timeline-2023">
+    <div class="entry" data-img="ph-merch" data-emoji="🛍️" data-quote="Цена не важна, когда в руках — частичка любимого мира" data-date="4 января 2023">
+      <span class="entry-date">4 января 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/IMG_20230104_221629.jpg">🛍️</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Цена не важна, когда в руках — частичка любимого мира»</p>
+      <p class="entry-description">Покупка моего первого мерча за бешеные деньги</p>
+    </div>
+
+    <div class="entry" data-img="ph-genshin" data-emoji="⚡" data-quote="Когда звёзды сошлись, и мечта стала реальностью" data-date="18 января 2023">
+      <span class="entry-date">18 января 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/5Y9GpZL9RNfFTnsqHuw9L-5877HQYN6DzP8tt82krxD7eC652R-ot7szuDr5hFiVAyd_wgiTBcoTxWrmWxo7awg5.jpg">⚡</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Когда звёзды сошлись, и мечта стала реальностью»</p>
+      <p class="entry-description">Выбила в Genshin Impact своего любимейшего персонажа — Аль-Хайтама</p>
+    </div>
+
+    <div class="entry" data-img="ph-hockey" data-emoji="🏒" data-quote="Лёд, адреналин и крики трибун — всё как я люблю" data-date="18 февраля 2023">
+      <span class="entry-date">18 февраля 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/IMG_20230218_193911.jpg">🏒</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Лёд, адреналин и крики трибун — всё как я люблю»</p>
+      <p class="entry-description">Впервые сходила на матч ХК Витязь именно в г. Балашихе</p>
+    </div>
+
+    <div class="entry" data-img="ph-figure" data-emoji="🗡️" data-quote="Первая фигурка — начало целой вселенной на полке" data-date="17 апреля 2023">
+      <span class="entry-date">17 апреля 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/IMG_20230417_232911.jpg">🗡️</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Первая фигурка — начало целой вселенной на полке»</p>
+      <p class="entry-description">То, с чего началась моя коллекция фигурок</p>
+    </div>
+
+    <div class="entry" data-img="ph-parrot" data-emoji="🦜" data-quote="Маленькое пернатое солнце, которое осветило мой день" data-date="7 мая 2023">
+      <span class="entry-date">7 мая 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/IMG_20230929_142049.jpg">🦜</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Маленькое пернатое солнце, которое осветило мой день»</p>
+      <p class="entry-description">Мой попугайчик Кеша Второй</p>
+    </div>
+
+    <div class="entry" data-img="ph-dandelion" data-emoji="🌼" data-quote="Королевство из солнечных цветов, сплетённое руками" data-date="13 мая 2023">
+      <span class="entry-date">13 мая 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <img src ="images/IMG_20230513_171501.jpg">🌼</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Королевство из солнечных цветов, сплетённое руками»</p>
+      <p class="entry-description">Первый сплетённый венок из одуванчиков</p>
+    </div>
+
+    <div class="entry" data-img="ph-museum" data-emoji="🏺" data-quote="История, которую можно потрогать руками" data-date="16 мая 2023">
+      <span class="entry-date">16 мая 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-museum">🏺</div>
+        </div>
+      </div>
+      <p class="entry-quote">«История, которую можно потрогать руками»</p>
+      <p class="entry-description">Поездка с классом в музей под открытым небом</p>
+    </div>
+
+    <div class="entry" data-img="ph-picnic" data-emoji="🧺" data-quote="Лето, трава, друзья — идеальный день" data-date="3 августа 2023">
+      <span class="entry-date">3 августа 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-picnic">🧺</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Лето, трава, друзья — идеальный день»</p>
+      <p class="entry-description">Пикник в Царицыно</p>
+    </div>
+
+    <div class="entry" data-img="ph-discord" data-emoji="💎" data-quote="Маленькое цифровое счастье, которое делает мир ярче" data-date="9 августа 2023">
+      <span class="entry-date">9 августа 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-discord">💎</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Маленькое цифровое счастье, которое делает мир ярче»</p>
+      <p class="entry-description">Первая покупка Nitro в Discord</p>
+    </div>
+
+    <div class="entry" data-img="ph-eurostar" data-emoji="🚗" data-quote="Мечта, которая обрела колёса и мчала меня к горизонту" data-date="28 августа 2023">
+      <span class="entry-date">28 августа 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-eurostar">🚗</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Мечта, которая обрела колёса и мчала меня к горизонту»</p>
+      <p class="entry-description">Исполнение одной из мечты — покататься на Eurostar в Анапе</p>
+    </div>
+
+    <div class="entry" data-img="ph-work" data-emoji="💼" data-quote="Первые заработанные — первые шаги во взрослую жизнь" data-date="9 сентября 2023">
+      <span class="entry-date">9 сентября 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-work">💼</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Первые заработанные — первые шаги во взрослую жизнь»</p>
+      <p class="entry-description">Подработка на папиной работе</p>
+    </div>
+
+    <div class="entry" data-img="ph-neuvillette" data-emoji="⚖️" data-quote="Судья вод правосудия наконец-то оказался в моих руках" data-date="7 октября 2023">
+      <span class="entry-date">7 октября 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-neuvillette">⚖️</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Судья вод правосудия наконец-то оказался в моих руках»</p>
+      <p class="entry-description">Выпадение моего кинна — Невиллетта из Genshin Impact</p>
+    </div>
+
+    <div class="entry" data-img="ph-hospital" data-emoji="🏥" data-quote="Место, где я поняла, что хочу спасать жизни" data-date="5 ноября 2023">
+      <span class="entry-date">5 ноября 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-hospital">🏥</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Место, где я поняла, что хочу спасать жизни»</p>
+      <p class="entry-description">Посещение больницы им. Склифосовского</p>
+    </div>
+
+    <div class="entry" data-img="ph-bonya" data-emoji="🐕" data-quote="Старый верный друг, который научил меня любить без условий" data-date="18 ноября 2023">
+      <span class="entry-date">18 ноября 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-bonya">🐕</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Старый верный друг, который научил меня любить без условий»</p>
+      <p class="entry-description">Моя собачка — Боня, 13-14 годиков</p>
+    </div>
+
+    <div class="entry" data-img="ph-disco" data-emoji="🎶" data-quote="Последний школьный танец, первый шаг к прощанию" data-date="28 декабря 2023">
+      <span class="entry-date">28 декабря 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-disco">🎶</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Последний школьный танец, первый шаг к прощанию»</p>
+      <p class="entry-description">Дискотека в школе, 9 класс</p>
+    </div>
+
+    <div class="entry" data-img="ph-book" data-emoji="📚" data-quote="Каждая книга — новая дверь в другой мир" data-date="29 декабря 2023">
+      <span class="entry-date">29 декабря 2023</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-book">📚</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Каждая книга — новая дверь в другой мир»</p>
+      <p class="entry-description">Пополнение в книжной коллекции</p>
+    </div>
+  </div>
+
+  <!-- === 2024 === -->
+  <div class="year-header" data-year="2024">
+    <h2>2024</h2>
+    <div class="year-line"></div>
+  </div>
+
+  <div class="timeline" id="timeline-2024">
+    <div class="entry" data-img="ph-ny-sochi" data-emoji="🎆" data-quote="Бой курантов под шум волн — так начинается новый год" data-date="3 января 2024">
+      <span class="entry-date">3 января 2024</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-ny-sochi">🎆</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Бой курантов под шум волн — так начинается новый год»</p>
+      <p class="entry-description">Первый Новый год в Сочи</p>
+    </div>
+
+    <div class="entry" data-img="ph-valentine" data-emoji="💕" data-quote="День, когда весь мир говорит о любви" data-date="14 февраля 2024">
+      <span class="entry-date">14 февраля 2024</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-valentine">💕</div>
+        </div>
+      </div>
+      <p class="entry-quote">«День, когда весь мир говорит о любви»</p>
+      <p class="entry-description">День всех влюблённых</p>
+    </div>
+
+    <div class="entry" data-img="ph-elista" data-emoji="🕌" data-quote="Город, где вращаются молитвенные барабаны и поют ветра" data-date="29 апреля 2024">
+      <span class="entry-date">29 апреля 2024</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-elista">🕌</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Город, где вращаются молитвенные барабаны и поют ветра»</p>
+      <p class="entry-description">Первое посещение г. Элисты</p>
+    </div>
+
+    <div class="entry" data-img="ph-graduation" data-emoji="🎓" data-quote="Красная корочка — красная строка в истории моей жизни" data-date="28 июня 2024">
+      <span class="entry-date">28 июня 2024</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-graduation">🎓</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Красная корочка — красная строка в истории моей жизни»</p>
+      <p class="entry-description">Выпуск из школы с красным аттестатом</p>
+    </div>
+
+    <div class="entry" data-img="ph-birthday" data-emoji="🎂" data-quote="Шестнадцать свечей на торте у моря" data-date="14 июля 2024">
+      <span class="entry-date">14 июля 2024</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-birthday">🎂</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Шестнадцать свечей на торте у моря»</p>
+      <p class="entry-description">Моё 16-летие в г. Сочи</p>
+    </div>
+
+    <div class="entry" data-img="ph-sleepover" data-emoji="🌙" data-quote="Ночь, когда разговоры не заканчивались до рассвета" data-date="28 августа 2024">
+      <span class="entry-date">28 августа 2024</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-sleepover">🌙</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Ночь, когда разговоры не заканчивались до рассвета»</p>
+      <p class="entry-description">Лютая ночёвка с подругой</p>
+    </div>
+
+    <div class="entry" data-img="ph-college" data-emoji="🩺" data-quote="Белый халат мечты — начало пути к людям" data-date="2 сентября 2024">
+      <span class="entry-date">2 сентября 2024</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-college">🩺</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Белый халат мечты — начало пути к людям»</p>
+      <p class="entry-description">Поступление в медицинский колледж</p>
+    </div>
+
+    <div class="entry" data-img="ph-dodo" data-emoji="🍕" data-quote="Когда миры пересекаются: пицца и Тейват" data-date="18 сентября 2024">
+      <span class="entry-date">18 сентября 2024</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-dodo">🍕</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Когда миры пересекаются: пицца и Тейват»</p>
+      <p class="entry-description">Поучаствовала в первый раз в коллаборации: Додо Пицца × Genshin Impact</p>
+    </div>
+  </div>
+
+  <!-- === 2025 === -->
+  <div class="year-header" data-year="2025">
+    <h2>2025</h2>
+    <div class="year-line"></div>
+  </div>
+
+  <div class="timeline" id="timeline-2025">
+    <div class="entry" data-img="ph-tanks" data-emoji="🎮" data-quote="Стальной характер и братство по оружию" data-date="18 января 2025">
+      <span class="entry-date">18 января 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-tanks">🎮</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Стальной характер и братство по оружию»</p>
+      <p class="entry-description">Игра в танки с ребятами</p>
+    </div>
+
+    <div class="entry" data-img="ph-cny" data-emoji="🐍" data-quote="Год Змеи принёс мудрость и новые начинания" data-date="1 февраля 2025">
+      <span class="entry-date">1 февраля 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-cny">🐍</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Год Змеи принёс мудрость и новые начинания»</p>
+      <p class="entry-description">Китайский Новый Год</p>
+    </div>
+
+    <div class="entry" data-img="ph-kyryusha" data-emoji="🐦" data-quote="Новый пернатый член семьи — новое крылатое счастье" data-date="6 апреля 2025">
+      <span class="entry-date">6 апреля 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-kyryusha">🐦</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Новый пернатый член семьи — новое крылатое счастье»</p>
+      <p class="entry-description">Добро пожаловать в семью, волнистик Кирюша</p>
+    </div>
+
+    <div class="entry" data-img="ph-rink" data-emoji="⛸️" data-quote="Лёд под коньками — свобода в каждом движении" data-date="9 апреля 2025">
+      <span class="entry-date">9 апреля 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-rink">⛸️</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Лёд под коньками — свобода в каждом движении»</p>
+      <p class="entry-description">Мой первый закрытый каток</p>
+    </div>
+
+    <div class="entry" data-img="ph-victory" data-emoji="🎗️" data-quote="Город-герой, хранящий память о великой победе" data-date="9 мая 2025">
+      <span class="entry-date">9 мая 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-victory">🎗️</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Город-герой, хранящий память о великой победе»</p>
+      <p class="entry-description">Санкт-Петербург в День Победы</p>
+    </div>
+
+    <div class="entry" data-img="ph-hangout" data-emoji="☕" data-quote="Те самые вечера, которые запоминаются навсегда" data-date="4 июля 2025">
+      <span class="entry-date">4 июля 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-hangout">☕</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Те самые вечера, которые запоминаются навсегда»</p>
+      <p class="entry-description">Атмосферные посиделки</p>
+    </div>
+
+    <div class="entry" data-img="ph-mall" data-emoji="🛒" data-quote="Бесцельные прогулки — лучший способ найти себя" data-date="26 июля 2025">
+      <span class="entry-date">26 июля 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-mall">🛒</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Бесцельные прогулки — лучший способ найти себя»</p>
+      <p class="entry-description">Прогулка по торговому центру</p>
+    </div>
+
+    <div class="entry" data-img="ph-hangout" data-emoji="💬" data-quote="Расстояние не помеха, когда голоса звучат рядом" data-date="28 июля 2025">
+      <span class="entry-date">28 июля 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-hangout" style="background: linear-gradient(135deg, #9a8ab8, #aa9ac8, #8a7aa8);">💬</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Расстояние не помеха, когда голоса звучат рядом»</p>
+      <p class="entry-description">Посиделки со старыми друзьями в Discord</p>
+    </div>
+
+    <div class="entry" data-img="ph-vityazevo" data-emoji="🏖️" data-quote="Чёрное море, золотой песок и бесконечное лето" data-date="9 августа 2025">
+      <span class="entry-date">9 августа 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-vityazevo">🏖️</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Чёрное море, золотой песок и бесконечное лето»</p>
+      <p class="entry-description">Г. Витязево во всей красе</p>
+    </div>
+
+    <div class="entry" data-img="ph-anniversary" data-emoji="💍" data-quote="Любовь, которая выдержала испытание временем" data-date="24 августа 2025">
+      <span class="entry-date">24 августа 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-anniversary">💍</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Любовь, которая выдержала испытание временем»</p>
+      <p class="entry-description">Годовщина свадьбы родителей</p>
+    </div>
+
+    <div class="entry" data-img="ph-nightmare" data-emoji="😱" data-quote="Иногда страшнее всего — зеркало в примерочной" data-date="21 сентября 2025">
+      <span class="entry-date">21 сентября 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-nightmare">😱</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Иногда страшнее всего — зеркало в примерочной»</p>
+      <p class="entry-description">«Кошмар» в торговом центре</p>
+    </div>
+
+    <div class="entry" data-img="ph-blood" data-emoji="💉" data-quote="Первый шаг в профессию — первый страх, который я преодолела" data-date="23 октября 2025">
+      <span class="entry-date">23 октября 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-blood">💉</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Первый шаг в профессию — первый страх, который я преодолела»</p>
+      <p class="entry-description">Мой первый забор крови</p>
+    </div>
+
+    <div class="entry" data-img="ph-oncology" data-emoji="🩻" data-quote="Там, где борьба за жизнь идёт каждую секунду" data-date="27 октября 2025">
+      <span class="entry-date">27 октября 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-oncology">🩻</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Там, где борьба за жизнь идёт каждую секунду»</p>
+      <p class="entry-description">Практика в онкологической реанимации</p>
+    </div>
+
+    <div class="entry" data-img="ph-dream" data-emoji="🎡" data-quote="Место, где взрослые снова становятся детьми" data-date="10 ноября 2025">
+      <span class="entry-date">10 ноября 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-dream">🎡</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Место, где взрослые снова становятся детьми»</p>
+      <p class="entry-description">Посещение парка аттракционов «Остров Мечты»</p>
+    </div>
+
+    <div class="entry" data-img="ph-endoscopy" data-emoji="🔬" data-quote="Заглянуть внутрь — буквально и метафорически" data-date="19 ноября 2025">
+      <span class="entry-date">19 ноября 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-endoscopy">🔬</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Заглянуть внутрь — буквально и метафорически»</p>
+      <p class="entry-description">Практика в эндоскопическом отделении</p>
+    </div>
+
+    <div class="entry" data-img="ph-gift" data-emoji="💐" data-quote="Подарки, сделанные с любовью — самые дорогие" data-date="22 ноября 2025">
+      <span class="entry-date">22 ноября 2025</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-gift">💐</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Подарки, сделанные с любовью — самые дорогие»</p>
+      <p class="entry-description">Букет цветочков и вязанный попугайчик от моего любимого человека</p>
+    </div>
+  </div>
+
+  <!-- === 2026 === -->
+  <div class="year-header" data-year="2026">
+    <h2>2026</h2>
+    <div class="year-line"></div>
+  </div>
+
+  <div class="timeline" id="timeline-2026">
+    <div class="entry" data-img="ph-hockey-sochi" data-emoji="🏒" data-quote="Хоккей на юге — парадокс, который я обожаю" data-date="5 января 2026">
+      <span class="entry-date">5 января 2026</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-hockey-sochi">🏒</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Хоккей на юге — парадокс, который я обожаю»</p>
+      <p class="entry-description">Сочинский хоккей</p>
+    </div>
+
+    <div class="entry" data-img="ph-wedding" data-emoji="💒" data-quote="Ещё одна история любви, ставшая вечностью" data-date="6 февраля 2026">
+      <span class="entry-date">6 февраля 2026</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-wedding">💒</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Ещё одна история любви, ставшая вечностью»</p>
+      <p class="entry-description">Свадьба моих знакомых</p>
+    </div>
+
+    <div class="entry" data-img="ph-love-gift" data-emoji="🎁" data-quote="Любовь — это не слова, это поступки" data-date="1 марта 2026">
+      <span class="entry-date">1 марта 2026</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-love-gift">🎁</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Любовь — это не слова, это поступки»</p>
+      <p class="entry-description">Подарок от моего любимого человека</p>
+    </div>
+
+    <div class="entry" data-img="ph-jersey" data-emoji="🏒" data-quote="Цвета команды на плечах — преданность навсегда" data-date="8 марта 2026">
+      <span class="entry-date">8 марта 2026</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-jersey">🏒</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Цвета команды на плечах — преданность навсегда»</p>
+      <p class="entry-description">Получила джерси своей любимой хоккейной команды</p>
+    </div>
+
+    <div class="entry" data-img="ph-blue-hair" data-emoji="💙" data-quote="Снова синяя — снова я" data-date="22 марта 2026">
+      <span class="entry-date">22 марта 2026</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-blue-hair">💙</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Снова синяя — снова я»</p>
+      <p class="entry-description">Снова покрасила пряди в синий цвет</p>
+    </div>
+
+    <div class="entry" data-img="ph-shashlik" data-emoji="🍢" data-quote="Дым, смех и братская любовь — идеальный вечер" data-date="17 апреля 2026">
+      <span class="entry-date">17 апреля 2026</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-shashlik">🍢</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Дым, смех и братская любовь — идеальный вечер»</p>
+      <p class="entry-description">Шашлыки с братом</p>
+    </div>
+
+    <div class="entry" data-img="ph-sakura" data-emoji="🌸" data-quote="Розовые лепестки — мимолётная красота, которая остаётся в сердце" data-date="25 апреля 2026">
+      <span class="entry-date">25 апреля 2026</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-sakura">🌸</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Розовые лепестки — мимолётная красота, которая остаётся в сердце»</p>
+      <p class="entry-description">Увидела впервые сакуру</p>
+    </div>
+
+    <div class="entry" data-img="ph-spb-family" data-emoji="👨‍👩‍👧" data-quote="Город, который объединяет поколения" data-date="8 мая 2026">
+      <span class="entry-date">8 мая 2026</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-spb-family">👨‍👩‍👧</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Город, который объединяет поколения»</p>
+      <p class="entry-description">Поездка всей семьёй в Санкт-Петербург</p>
+    </div>
+
+    <div class="entry" data-img="ph-dream-come" data-emoji="✨" data-quote="Страх — это просто дверь. За ней — мечта" data-date="9 мая 2026">
+      <span class="entry-date">9 мая 2026</span>
+      <div class="polaroid">
+        <div class="polaroid-img">
+          <div class="placeholder ph-dream-come">✨</div>
+        </div>
+      </div>
+      <p class="entry-quote">«Страх — это просто дверь. За ней — мечта»</p>
+      <p class="entry-description">Преодоление одного из моих страхов и воплощение одной из моих мечт</p>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-line"></div>
+    <p class="footer-text">«Жизнь — это не количество вдохов, а моменты, когда дух захватывает»</p>
+    <p class="footer-sub">✦ МОИ ВОСПОМИНАНИЯ ✦ 2019 — 2026 ✦</p>
+  </footer>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-content" id="lightboxImg" src="" alt="">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // ===== SCROLL ANIMATIONS =====
+    const entries = document.querySelectorAll('.entry');
+    const yearHeaders = document.querySelectorAll('.year-header');
+
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    entries.forEach(entry => observer.observe(entry));
+
+    const yearObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.3 });
+
+    yearHeaders.forEach(h => {
+      h.style.opacity = '0';
+      h.style.transform = 'translateY(20px)';
+      h.style.transition = 'all 0.8s ease';
+      yearObserver.observe(h);
+    });
+
+    // ===== NAV DOTS =====
+    const navDotsContainer = document.getElementById('navDots');
+    const years = ['2019', '2022', '2023', '2024', '2025', '2026'];
+
+    years.forEach(year => {
+      const dot = document.createElement('div');
+      dot.className = 'nav-dot';
+      dot.innerHTML = `<span class="dot-label">${year}</span>`;
+      dot.addEventListener('click', () => {
+        const header = document.querySelector(`.year-header[data-year="${year}"]`);
+        if (header) header.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      navDotsContainer.appendChild(dot);
+    });
+
+    // Update active dot on scroll
+    const dotObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const year = entry.target.dataset.year;
+          document.querySelectorAll('.nav-dot').forEach(d => {
+            d.classList.toggle('active', d.querySelector('.dot-label').textContent === year);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    yearHeaders.forEach(h => dotObserver.observe(h));
+
+    // ===== LIGHTBOX =====
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+
+    document.querySelectorAll('.polaroid').forEach(polaroid => {
+      polaroid.addEventListener('click', () => {
+        const entry = polaroid.closest('.entry');
+        const imgSrc = polaroid.querySelector('.placeholder')?.getAttribute('data-full-img') || '';
+        const quote = entry?.dataset?.quote || '';
+        
+        lightboxCaption.textContent = quote;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // ===== FLOATING PARTICLES =====
+    const particlesContainer = document.getElementById('particles');
+    const particleSymbols = ['✦', '✿', '❋', '·', '✧', '❀'];
+
+    function createParticle() {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.textContent = particleSymbols[Math.floor(Math.random() * particleSymbols.length)];
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.top = Math.random() * 100 + 'vh';
+      p.style.fontSize = (0.5 + Math.random() * 1) + 'rem';
+      p.style.color = `hsl(${30 + Math.random() * 30}, ${30 + Math.random() * 20}%, ${50 + Math.random() * 20}%)`;
+      p.style.animationDuration = (6 + Math.random() * 6) + 's';
+      p.style.animationDelay = Math.random() * 4 + 's';
+      particlesContainer.appendChild(p);
+
+      setTimeout(() => p.remove(), 14000);
+    }
+
+    setInterval(createParticle, 2000);
+    for (let i = 0; i < 8; i++) setTimeout(createParticle, i * 500);
+
+    // ===== HERO PARALLAX =====
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero-content');
+      if (hero && scrolled < window.innerHeight) {
+        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+        hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.8;
+      }
+    });
+
+    // ===== POLAROID TILT ON MOUSE =====
+    document.querySelectorAll('.polaroid').forEach(p => {
+      p.addEventListener('mousemove', (e) => {
+        const rect = p.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        p.style.transform = `rotate(0deg) scale(1.03) perspective(600px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg)`;
+      });
+
+      p.addEventListener('mouseleave', () => {
+        const entry = p.closest('.entry');
+        if (entry) {
+          const isOdd = [...entry.parentElement.children].indexOf(entry) % 2 === 0;
+          p.style.transform = isOdd ? 'rotate(-2deg)' : 'rotate(1.5deg)';
+        }
+      });
+    });
+  </script>
+</body>
+            </html>
