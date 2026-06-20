@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Кроссворд по фармакологии</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+    }
+
+    table {
+        margin: 20px auto;
+        border-collapse: collapse;
+    }
+
+    td {
+        width: 35px;
+        height: 35px;
+        border: 1px solid #000;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .empty {
+        border: none;
+    }
+
+    .hidden-letter {
+        color: transparent;
+    }
+
+    .show {
+        color: black;
+    }
+
+    .number {
+        position: relative;
+    }
+
+    .number::before {
+        position: absolute;
+        top: 1px;
+        left: 2px;
+        font-size: 10px;
+        font-weight: normal;
+    }
+
+    .n1::before { content: "1"; }
+    .n2::before { content: "2"; }
+    .n3::before { content: "3"; }
+    .n4::before { content: "4"; }
+    .n5::before { content: "5"; }
+
+    .clues {
+        width: 700px;
+        margin: auto;
+        text-align: left;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<h2>Кроссворд «Фармакология»</h2>
+
+<table>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="number n1 hidden-letter">А</td>
+<td class="hidden-letter">Н</td>
+<td class="hidden-letter">Т</td>
+<td class="hidden-letter">И</td>
+<td class="hidden-letter">Б</td>
+<td class="hidden-letter">И</td>
+<td class="hidden-letter">О</td>
+<td class="hidden-letter">Т</td>
+<td class="hidden-letter">И</td>
+<td class="hidden-letter">К</td>
+</tr>
+
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="hidden-letter">Д</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="number n2 hidden-letter">О</td>
+<td class="hidden-letter">З</td>
+<td class="hidden-letter">А</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="hidden-letter">З</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+
+<tr>
+<td class="number n3 hidden-letter">Р</td>
+<td class="hidden-letter">Е</td>
+<td class="hidden-letter">Ц</td>
+<td class="hidden-letter">Е</td>
+<td class="hidden-letter">П</td>
+<td class="hidden-letter">Т</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="hidden-letter">Т</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="number n4 hidden-letter">Т</td>
+<td class="hidden-letter">А</td>
+<td class="hidden-letter">Б</td>
+<td class="hidden-letter">Л</td>
+<td class="hidden-letter">Е</td>
+<td class="hidden-letter">Т</td>
+<td class="hidden-letter">К</td>
+<td class="hidden-letter">А</td>
+<td class="empty"></td>
+</tr>
+
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="hidden-letter">К</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+
+<tr>
+<td class="number n5 hidden-letter">Ф</td>
+<td class="hidden-letter">А</td>
+<td class="hidden-letter">Р</td>
+<td class="hidden-letter">М</td>
+<td class="hidden-letter">А</td>
+<td class="hidden-letter">К</td>
+<td class="hidden-letter">О</td>
+<td class="hidden-letter">Л</td>
+<td class="hidden-letter">О</td>
+<td class="hidden-letter">Г</td>
+<td class="hidden-letter">И</td>
+<td class="hidden-letter">Я</td>
+<td class="empty"></td>
+</tr>
+</table>
+
+<button onclick="showAnswers()">Показать ответы</button>
+
+<div class="clues">
+<h3>Вопросы</h3>
+
+<p><b>По горизонтали:</b></p>
+<ol>
+<li>Лекарство для борьбы с бактериями.</li>
+<li>Количество лекарственного средства для приема.</li>
+<li>Документ, по которому отпускают лекарства.</li>
+<li>Твёрдая лекарственная форма.</li>
+<li>Наука о лекарственных средствах.</li>
+</ol>
+</div>
+
+<script>
+function showAnswers() {
+    document.querySelectorAll('.hidden-letter').forEach(cell => {
+        cell.classList.add('show');
+    });
+}
+</script>
+
+</body>
+</html>
