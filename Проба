@@ -2,241 +2,136 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Кроссворд по фармакологии</title>
+<title>Кроссворд "Фармакология"</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        margin: 20px;
-    }
-
-    table {
-        margin: 20px auto;
-        border-collapse: collapse;
-    }
-
-    td {
-        width: 35px;
-        height: 35px;
-        border: 1px solid #000;
-        text-align: center;
-        vertical-align: middle;
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    .empty {
-        border: none;
-    }
-
-    .hidden-letter {
-        color: transparent;
-    }
-
-    .show {
-        color: black;
-    }
-
-    .number {
-        position: relative;
-    }
-
-    .number::before {
-        position: absolute;
-        top: 1px;
-        left: 2px;
-        font-size: 10px;
-        font-weight: normal;
-    }
-
-    .n1::before { content: "1"; }
-    .n2::before { content: "2"; }
-    .n3::before { content: "3"; }
-    .n4::before { content: "4"; }
-    .n5::before { content: "5"; }
-
-    .clues {
-        width: 700px;
-        margin: auto;
-        text-align: left;
-    }
-
-    button {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
+body{
+    font-family: Arial, sans-serif;
+    text-align:center;
+    margin:20px;
+}
+table{
+    border-collapse:collapse;
+    margin:auto;
+}
+td{
+    width:35px;
+    height:35px;
+    border:1px solid #000;
+    text-align:center;
+    vertical-align:middle;
+    position:relative;
+}
+.empty{
+    border:none;
+}
+input{
+    width:100%;
+    height:100%;
+    border:none;
+    text-align:center;
+    font-size:20px;
+    text-transform:uppercase;
+}
+.num{
+    position:absolute;
+    top:1px;
+    left:2px;
+    font-size:10px;
+}
+.clues{
+    width:700px;
+    margin:20px auto;
+    text-align:left;
+}
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    font-size:16px;
+}
 </style>
 </head>
 <body>
 
 <h2>Кроссворд «Фармакология»</h2>
 
-<table>
-<tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="number n1 hidden-letter">А</td>
-<td class="hidden-letter">Н</td>
-<td class="hidden-letter">Т</td>
-<td class="hidden-letter">И</td>
-<td class="hidden-letter">Б</td>
-<td class="hidden-letter">И</td>
-<td class="hidden-letter">О</td>
-<td class="hidden-letter">Т</td>
-<td class="hidden-letter">И</td>
-<td class="hidden-letter">К</td>
-</tr>
-
-<tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="hidden-letter">Д</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-
-<tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="number n2 hidden-letter">О</td>
-<td class="hidden-letter">З</td>
-<td class="hidden-letter">А</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-
-<tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="hidden-letter">З</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-
-<tr>
-<td class="number n3 hidden-letter">Р</td>
-<td class="hidden-letter">Е</td>
-<td class="hidden-letter">Ц</td>
-<td class="hidden-letter">Е</td>
-<td class="hidden-letter">П</td>
-<td class="hidden-letter">Т</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-
-<tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="hidden-letter">Т</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-
-<tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="number n4 hidden-letter">Т</td>
-<td class="hidden-letter">А</td>
-<td class="hidden-letter">Б</td>
-<td class="hidden-letter">Л</td>
-<td class="hidden-letter">Е</td>
-<td class="hidden-letter">Т</td>
-<td class="hidden-letter">К</td>
-<td class="hidden-letter">А</td>
-<td class="empty"></td>
-</tr>
-
-<tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="hidden-letter">К</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-
-<tr>
-<td class="number n5 hidden-letter">Ф</td>
-<td class="hidden-letter">А</td>
-<td class="hidden-letter">Р</td>
-<td class="hidden-letter">М</td>
-<td class="hidden-letter">А</td>
-<td class="hidden-letter">К</td>
-<td class="hidden-letter">О</td>
-<td class="hidden-letter">Л</td>
-<td class="hidden-letter">О</td>
-<td class="hidden-letter">Г</td>
-<td class="hidden-letter">И</td>
-<td class="hidden-letter">Я</td>
-<td class="empty"></td>
-</tr>
-</table>
+<table id="crossword"></table>
 
 <button onclick="showAnswers()">Показать ответы</button>
 
 <div class="clues">
 <h3>Вопросы</h3>
 
-<p><b>По горизонтали:</b></p>
-<ol>
-<li>Лекарство для борьбы с бактериями.</li>
-<li>Количество лекарственного средства для приема.</li>
-<li>Документ, по которому отпускают лекарства.</li>
-<li>Твёрдая лекарственная форма.</li>
+<b>По горизонтали:</b>
+<ol start="1">
 <li>Наука о лекарственных средствах.</li>
+</ol>
+
+<b>По вертикали:</b>
+<ol start="2">
+<li>Лекарство для борьбы с бактериями.</li>
+<li>Количество лекарственного средства для приёма.</li>
+<li>Документ для отпуска лекарств.</li>
+<li>Твёрдая лекарственная форма.</li>
 </ol>
 </div>
 
 <script>
-function showAnswers() {
-    document.querySelectorAll('.hidden-letter').forEach(cell => {
-        cell.classList.add('show');
+const rows = 12;
+const cols = 15;
+
+const words = [
+ {word:"ФАРМАКОЛОГИЯ", row:5, col:1, dir:"h", num:1},
+ {word:"АНТИБИОТИК", row:0, col:5, dir:"v", num:2},
+ {word:"ДОЗА", row:5, col:2, dir:"v", num:3},
+ {word:"РЕЦЕПТ", row:5, col:3, dir:"v", num:4},
+ {word:"ТАБЛЕТКА", row:5, col:4, dir:"v", num:5}
+];
+
+const table = document.getElementById("crossword");
+
+let grid = Array(rows).fill().map(()=>Array(cols).fill(null));
+
+words.forEach(w=>{
+    for(let i=0;i<w.word.length;i++){
+        let r=w.row+(w.dir==="v"?i:0);
+        let c=w.col+(w.dir==="h"?i:0);
+        grid[r][c]=w.word[i];
+    }
+});
+
+for(let r=0;r<rows;r++){
+    let tr=document.createElement("tr");
+
+    for(let c=0;c<cols;c++){
+        let td=document.createElement("td");
+
+        if(grid[r][c]===null){
+            td.className="empty";
+        }else{
+            let inp=document.createElement("input");
+            inp.maxLength=1;
+            inp.dataset.answer=grid[r][c];
+            td.appendChild(inp);
+
+            words.forEach(w=>{
+                if(w.row===r && w.col===c){
+                    let n=document.createElement("span");
+                    n.className="num";
+                    n.textContent=w.num;
+                    td.appendChild(n);
+                }
+            });
+        }
+
+        tr.appendChild(td);
+    }
+
+    table.appendChild(tr);
+}
+
+function showAnswers(){
+    document.querySelectorAll("input").forEach(inp=>{
+        inp.value=inp.dataset.answer;
     });
 }
 </script>
